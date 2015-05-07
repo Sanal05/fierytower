@@ -1,15 +1,14 @@
 import pygame
 import random
 
-# This class represents the platform we jump on
+# This class represents the ball object
 class Ball(pygame.sprite.Sprite):
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
 		Ball.image=pygame.image.load('ball.png')
 		self.image=Ball.image
 		self.rect=self.image.get_rect()
-	
-
+#This class represents the platform we jump on	
 class Platform (pygame.sprite.Sprite):
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
@@ -209,10 +208,10 @@ while done==False:
 		
 	scrolldownfunc(1) #to change the speed of scrolling 
 	
-	if player.rect.x >= 700:
-		player.rect.x = -15
-	if player.rect.x <= -20:
-		player.rect.x = 699
+	if player.rect.x >= 530:
+		player.rect.x = 530
+	if player.rect.x <= 75:
+		player.rect.x = 75
 	
 	score+=player.calc_grav(count)
 	player.update(block_list)			
@@ -230,9 +229,9 @@ while done==False:
 	gend.rect.x  += ballxmove	# Update ball position
 	gend.rect.y += ballymove
 
-	if gend.rect.x > 600:			# Ball reached screen edges?
+	if gend.rect.x > 530:			# Ball reached screen edges?
 		ballxmove = -2
-	if gend.rect.x < 0:
+	if gend.rect.x < 80:
 		ballxmove = 2
 	if gend.rect.y > 440:
 		ballymove = -2
@@ -249,30 +248,30 @@ while done==False:
 	pygame.display.flip()
 	# Be IDLE friendly. If you forget this line, the program will 'hang'
 	# on exit.\
-rank=-1*score+1	
-norank=1
-if rank>1 and rank<100:
-	final= "superb!"
-if rank<=6:
-	final="We Bow to You our Master!!!"
-if rank>100 and rank<500:
+totalScore=-1*score+1	
+nototalScore=1
+if totalScore>1 and totalScore<100:
+	final= "Try Again!"
+if totalScore<=6:
+	final="Give another shot!!!"
+if totalScore>100 and totalScore<500:
 	final= "good!!"
-if rank>500 and rank<1000:
+if totalScore>500 and totalScore<1000:
 	final= "well tried!"
-if rank>1000 :
-	final= "give another shot!!"
-if rank>10000:
-	final= "seriously!! r u nuts??"
+if totalScore>1000 :
+	final= "Superb!!"
+if totalScore>10000:
+	final= "We Bow to you our Master!!"
 if coward:
-	final="You do not deserve a rank"
-	norank=0
+	final="You do not deserve a Score"
+	nototalScore=0
 screen.fill((0,0,0))
-rank=str(rank)
-r="Your rank is " +rank
+totalScore=str(totalScore)
+r="Your Score is " + totalScore
 printText("Game Over!!", "MS Comic Sans", 30, 230, 220, red)
-if norank:
+if nototalScore:
 	printText(r, "MS Comic Sans", 30, 230, 250, red)
 printText(final, "MS Comic Sans", 30, 230, 280, red)
 #time.delay(10)
-
+pygame.time.wait(2000) #To make the score freeze for 2 seconds
 pygame.quit ()
